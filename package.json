@@ -1,7 +1,7 @@
 {
   "name": "vue-tables-2",
   "description": "Vue.js 2 grid components",
-  "version": "0.2.15",
+  "version": "0.6.23",
   "keywords": [
     "vue2",
     "vuex",
@@ -14,29 +14,29 @@
     "url": "https://github.com/matfish2/vue-tables-2"
   },
   "files": [
-    "index.js",
-    "lib",
-    "tonic-example.js"
+    "compiled"
   ],
   "dependencies": {
+    "array-intersection": "^0.1.2",
+    "clone": "^2.1.0",
     "merge": "^1.2.0",
     "moment": "^2.11.1",
     "vue": ">=2.0.0",
-    "vue-pagination-2": "^0.2.2",
+    "vue-pagination-2": "^0.3",
     "vue-resource": "^0.9.0"
   },
-  "browserify": {
-    "transform": [
-      "babelify"
-    ]
-  },
-    "scripts": {
-    "build-min": "browserify index.js --s VueTables | uglifyjs -c > ../dist/vue-tables.min.js"
+  "scripts": {
+    "build": "babel lib -d compiled"
   },
   "licenses": "MIT",
-  "main": "index.js",
+  "main": "compiled/index.js",
   "tonicExampleFilename": "tonic-example.js",
   "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-helper-vue-jsx-merge-props": "^2.0.1",
+    "babel-plugin-syntax-jsx": "^6.13.0",
+    "babel-plugin-transform-vue-jsx": "^3.1.0",
+    "babel-preset-es2015": "^6.24.1",
     "daterangepicker": "0.0.3",
     "jasmine-core": "^2.3.4",
     "jquery": "^2.1.4",
@@ -44,9 +44,6 @@
     "karma-browserify": "^4.4.1",
     "karma-chrome-launcher": "^0.2.1",
     "karma-firefox-launcher": "^0.1.7",
-    "karma-jasmine": "^0.3.6",
-    "babel-helper-vue-jsx-merge-props": "^2.0.1",
-    "babel-plugin-syntax-jsx": "^6.13.0",
-    "babel-plugin-transform-vue-jsx": "^3.1.0"
+    "karma-jasmine": "^0.3.6"
   }
 }
