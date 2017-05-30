@@ -14,7 +14,7 @@
     "url": "https://github.com/matfish2/vue-tables-2"
   },
   "files": [
-    "compiled"
+    "lib"
   ],
   "dependencies": {
     "array-intersection": "^0.1.2",
