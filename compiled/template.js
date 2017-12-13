@@ -13,6 +13,19 @@ module.exports = function (source) {
     var dropdownPaginationCount = require('./template/dropdown-pagination-count')(h, this);
     var headings = require('./template/headings')(h, this);
     var perPage = require('./template/per-page')(h, this);
+    var beforeFilters = this.$slots.beforeFilters ? this.$slots.beforeFilters : '';
+    var afterFilters = this.$slots.afterFilters ? this.$slots.afterFilters : '';
+    var beforeBody = this.$slots.beforeBody ? this.$slots.beforeBody : '';
+    var prependBody = this.$slots.prependBody ? this.$slots.prependBody : '';
+    var appendBody = this.$slots.appendBody ? this.$slots.appendBody : '';
+    var afterBody = this.$slots.afterBody ? this.$slots.afterBody : '';
+    var beforeTable = this.$slots.beforeTable ? this.$slots.beforeTable : '';
+
+    var prependFilterContainer = this.$slots.prependFilterContainer ? this.$slots.prependFilterContainer : '';
+    var appendFilterContainer = this.$slots.appendFilterContainer ? this.$slots.appendFilterContainer : '';
+
+    var prependLimitContainer = this.$slots.prependLimitContainer ? this.$slots.prependLimitContainer : '';
+    var appendLimitContainer = this.$slots.appendLimitContainer ? this.$slots.appendLimitContainer : '';
 
     return h(
       'div',
@@ -22,28 +35,32 @@ module.exports = function (source) {
         { 'class': 'row' },
         [h(
           'div',
-          { 'class': 'col-md-6' },
-          [normalFilter]
+          { 'class': 'col-md-6 VueTables__search-wrapper' },
+          [prependFilterContainer, normalFilter, appendFilterContainer]
         ), h(
           'div',
-          { 'class': 'col-md-6' },
-          [dropdownPagination, perPage]
+          { 'class': 'col-md-6 VueTables__limit-wrapper' },
+          [prependLimitContainer, dropdownPagination, perPage, appendLimitContainer]
         )]
-      ), h(
-        'table',
-        { 'class': 'VueTables__table table ' + this.opts.skin },
+      ), beforeTable, h(
+        'div',
+        { 'class': 'table-responsive' },
         [h(
-          'thead',
-          null,
+          'table',
+          { 'class': 'VueTables__table table ' + this.opts.skin },
           [h(
-            'tr',
+            'thead',
             null,
-            [headings]
-          ), columnFilters]
-        ), footerHeadings, h(
-          'tbody',
-          null,
-          [noResults, rows]
+            [h(
+              'tr',
+              null,
+              [headings]
+            ), beforeFilters, columnFilters, afterFilters]
+          ), footerHeadings, beforeBody, h(
+            'tbody',
+            null,
+            [prependBody, noResults, rows, appendBody]
+          ), afterBody]
         )]
       ), pagination, dropdownPaginationCount]
     );

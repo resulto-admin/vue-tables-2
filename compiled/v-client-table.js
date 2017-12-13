@@ -65,7 +65,7 @@ exports.install = function (Vue, globalOptions, useVuex, customTemplate) {
 
       if (!this.vuex) {
 
-        this.initOrderBy(this.Columns[0]);
+        this.initOrderBy();
 
         this.query = this.initQuery();
 
@@ -84,8 +84,11 @@ exports.install = function (Vue, globalOptions, useVuex, customTemplate) {
       if (!this.vuex) {
         this.registerClientFilters();
 
+        if (this.options.initialPage) this.setPage(this.options.initialPage);
+
         _vuePagination.PaginationEvent.$on('vue-pagination::' + this.id, function (page) {
           this.setPage(page);
+          this.dispatch('pagination', page);
         }.bind(this));
       }
 
@@ -95,14 +98,19 @@ exports.install = function (Vue, globalOptions, useVuex, customTemplate) {
     data: function data() {
       return _merge2.default.recursive(_data(), {
         source: 'client',
-        globalOptions: globalOptions
-      }, (0, _data3.default)(useVuex, 'client'));
+        globalOptions: globalOptions,
+        currentlySorting: {},
+        time: Date.now()
+      }, (0, _data3.default)(useVuex, 'client', this.options.initialPage));
     },
     computed: {
       q: require('./computed/q'),
       customQ: require('./computed/custom-q'),
       totalPages: require('./computed/total-pages'),
-      filteredData: require('./computed/filtered-data')
+      filteredData: require('./computed/filtered-data'),
+      hasMultiSort: function hasMultiSort() {
+        return this.opts.clientMultiSorting;
+      }
     },
 
     filters: {
@@ -114,18 +122,21 @@ exports.install = function (Vue, globalOptions, useVuex, customTemplate) {
       transformDateStringsToMoment: require('./methods/transform-date-strings-to-moment'),
       registerClientFilters: require('./methods/register-client-filters'),
       search: require('./methods/client-search'),
+      defaultSort: require('./methods/default-sort'),
       loadState: function loadState() {
 
         if (!this.opts.saveState) return;
 
         if (!this.storage.getItem(this.stateKey)) {
           this.initState();
+          this.activeState = true;
           return;
         }
 
         var state = JSON.parse(this.storage.getItem(this.stateKey));
 
-        this.setFilter(state.query);
+        if (this.opts.filterable) this.setFilter(state.query);
+
         this.setOrder(state.orderBy.column, state.orderBy.ascending);
 
         if (this.vuex) {
@@ -149,4 +160,6 @@ exports.install = function (Vue, globalOptions, useVuex, customTemplate) {
   client = _merge2.default.recursive(client, state);
 
   Vue.component('v-client-table', client);
+
+  return client;
 };

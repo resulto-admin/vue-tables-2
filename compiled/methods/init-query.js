@@ -12,21 +12,22 @@ module.exports = function () {
 
   var filterable = this.opts.filterable && _typeof(this.opts.filterable) == 'object' ? this.opts.filterable : this.columns;
 
+  var that = this;
+
   filterable.forEach(function (column) {
-    query[column] = getInitialValue(init, column);
+    query[column] = getInitialValue(init, column, that);
   }.bind(this));
 
   return query;
 };
 
-function getInitialValue(init, column) {
-
+function getInitialValue(init, column, that) {
   if (!init.hasOwnProperty(column)) return '';
 
   if (typeof init[column].start == 'undefined') return init[column];
 
   return {
-    start: init[column].start.format('YYYY-MM-DD'),
-    end: init[column].end.format('YYYY-MM-DD')
+    start: init[column].start.format(that.opts.dateFormat),
+    end: init[column].end.format(that.opts.dateFormat)
   };
 }

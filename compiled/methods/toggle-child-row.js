@@ -1,14 +1,13 @@
-'use strict';
+"use strict";
 
 module.exports = function (rowId, e) {
 
   if (e) e.stopPropagation();
 
-  var key = 'row_' + rowId;
-
-  if (typeof this.rowsToggleState[key] == 'undefined') {
-    this.$set(this.rowsToggleState, key, true);
+  if (this.openChildRows.includes(rowId)) {
+    var index = this.openChildRows.indexOf(rowId);
+    this.openChildRows.splice(index, 1);
   } else {
-    this.rowsToggleState[key] = !this.rowsToggleState[key];
+    this.openChildRows.push(rowId);
   }
 };

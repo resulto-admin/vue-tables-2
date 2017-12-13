@@ -1,4 +1,6 @@
-"use strict";
+'use strict';
+
+var moment = require('moment');
 
 module.exports = function () {
   this.data.forEach(function (row, index) {

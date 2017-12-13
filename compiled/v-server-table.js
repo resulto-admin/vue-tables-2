@@ -66,11 +66,7 @@ exports.install = function (Vue, globalOptions, useVuex, customTemplate) {
 
       if (!this.vuex) {
         this.query = this.initQuery();
-
-        this.initOrderBy(this.Columns[0]);
-      }
-
-      if (!this.vuex) {
+        this.initOrderBy();
         this.customQueries = this.initCustomFilters();
       }
 
@@ -79,7 +75,7 @@ exports.install = function (Vue, globalOptions, useVuex, customTemplate) {
       this.getData(true).then(function (response) {
 
         var data = this.getResponseData(response);
-        this.setData(this.opts.responseAdapter(data));
+        this.setData(this.opts.responseAdapter.call(this.$root, data));
 
         this.loading = false;
 
@@ -91,14 +87,28 @@ exports.install = function (Vue, globalOptions, useVuex, customTemplate) {
       }.bind(this));
     },
     mounted: function mounted() {
+      var _this = this;
+
+      if (this.opts.saveState) {
+        var state = JSON.parse(this.storage.getItem(this.stateKey));
+
+        if (this.hasDateFilters) {
+          this.opts.dateColumns.forEach(function (column) {
+            return _this._setDateFilterText(column, state.query[column]);
+          });
+        }
+      }
 
       if (this.vuex) return;
 
       this.registerServerFilters();
 
+      if (this.options.initialPage) this.setPage(this.options.initialPage, true);
+
       _vuePagination.PaginationEvent.$on('vue-pagination::' + this.id, function (page) {
 
         this.setPage(page);
+        this.dispatch('pagination');
       }.bind(this));
     },
     data: function data() {
@@ -107,7 +117,7 @@ exports.install = function (Vue, globalOptions, useVuex, customTemplate) {
         loading: true,
         lastKeyStrokeAt: false,
         globalOptions: globalOptions
-      }, (0, _data3.default)(useVuex, 'server'));
+      }, (0, _data3.default)(useVuex, 'server', this.options.initialPage));
     },
     methods: {
       refresh: require('./methods/refresh'),
@@ -116,12 +126,13 @@ exports.install = function (Vue, globalOptions, useVuex, customTemplate) {
       serverSearch: require('./methods/server-search'),
       registerServerFilters: require('./methods/register-server-filters'),
       loadState: function loadState() {
-        var _this = this;
+        var _this2 = this;
 
         if (!this.opts.saveState) return;
 
         if (!this.storage.getItem(this.stateKey)) {
           this.initState();
+          this.activeState = true;
           return;
         }
 
@@ -145,7 +156,7 @@ exports.install = function (Vue, globalOptions, useVuex, customTemplate) {
 
         if (!this.opts.pagination.dropdown) {
           setTimeout(function () {
-            _this.$refs.pagination.Page = state.page;
+            _this2.$refs.pagination.Page = state.page;
           }, 0);
         }
 
@@ -153,10 +164,15 @@ exports.install = function (Vue, globalOptions, useVuex, customTemplate) {
       }
     },
     computed: {
-      totalPages: require('./computed/total-pages')
+      totalPages: require('./computed/total-pages'),
+      hasMultiSort: function hasMultiSort() {
+        return this.opts.serverMultiSorting;
+      }
     }
 
   }, state);
 
   Vue.component('v-server-table', server);
+
+  return server;
 };

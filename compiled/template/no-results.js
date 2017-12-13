@@ -1,20 +1,25 @@
-"use strict";
+'use strict';
 
 module.exports = function (h, that) {
+  var innerNoResults = that.display(that.loading ? 'loading' : 'noResults');
   if (that.count == 0) {
 
     var colspan = that.allColumns.length;
-    if (that.opts.childRow) colspan++;
+    if (that.hasChildRow) colspan++;
 
     return h(
-      "tr",
-      { "class": "VueTables__no-results" },
+      'tr',
+      { 'class': 'VueTables__no-results' },
       [h(
-        "td",
-        { "class": "text-center",
-          attrs: { colspan: colspan }
+        'td',
+        { 'class': 'text-center',
+          attrs: { colspan: colspan
+          },
+          domProps: {
+            'innerHTML': innerNoResults
+          }
         },
-        [that.display(that.loading ? 'loading' : 'noResults')]
+        []
       )]
     );
   }

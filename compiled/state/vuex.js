@@ -53,29 +53,34 @@ exports.default = function (source) {
       }
     },
     methods: {
-      commit: function commit(action, payload, silent) {
-        silent = { silent: silent };
-        return this.$store.commit(this.name + '/' + action, payload, silent);
+      commit: function commit(action, payload) {
+        return this.$store.commit(this.name + '/' + action, payload);
       },
-      orderByColumn: function orderByColumn(column) {
+      orderByColumn: function orderByColumn(column, ev) {
 
         if (!this.sortable(column)) return;
 
-        var ascending = this.orderBy.column === column ? !this.orderBy.ascending : true;
-
-        this.updateState('orderBy', { column: column, ascending: ascending });
-        this.commit('SORT', { column: column, ascending: ascending });
+        if (ev.shiftKey && this.orderBy.column && this.hasMultiSort) {
+          this.setUserMultiSort(column);
+        } else {
+          var ascending = this.orderBy.column === column ? !this.orderBy.ascending : true;
+          var orderBy = { column: column, ascending: ascending };
+          this.updateState('orderBy', orderBy);
+          this.commit('SORT', orderBy);
+          this.dispatch('sorted', orderBy);
+        }
       },
       setLimit: function setLimit(e) {
         var limit = (typeof e === 'undefined' ? 'undefined' : _typeof(e)) === 'object' ? parseInt(e.target.value) : e;
         this.updateState('perPage', limit);
         this.commit('SET_LIMIT', limit);
+        this.dispatch('limit', limit);
       },
       setOrder: function setOrder(column, ascending) {
         this.updateState('orderBy', { column: column, ascending: ascending });
         this.commit('SORT', { column: column, ascending: ascending });
       },
-      setPage: function setPage(page, silent) {
+      setPage: function setPage(page) {
 
         if (!page) {
           page = this.$refs.page.value;
@@ -83,7 +88,7 @@ exports.default = function (source) {
 
         if (!this.opts.pagination.dropdown) this.$refs.pagination.Page = page;
 
-        this.commit('PAGINATE', page, silent);
+        this.commit('PAGINATE', page);
       }
 
     }
@@ -99,12 +104,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function serverExtra() {
   return {
     methods: {
-      setData: function setData(_ref) {
-        var data = _ref.data;
-        var count = _ref.count;
+      setData: function setData(data) {
+        this.commit('SET_DATA', data);
+        this.commit('LOADED', data);
 
-        this.commit('SET_DATA', { data: data, count: count });
-        this.commit('LOADED', { data: data, count: count });
+        setTimeout(function () {
+          this.dispatch('loaded', data);
+        }.bind(this), 0);
       }
     }
   };

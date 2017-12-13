@@ -6,7 +6,7 @@ module.exports = function (h, that) {
 
   var headings = [];
 
-  if (that.opts.childRow) headings.push(h(
+  if (that.hasChildRow && that.opts.childRowTogglerFirst) headings.push(h(
     "th",
     null,
     []
@@ -17,17 +17,24 @@ module.exports = function (h, that) {
       "th",
       {
         on: {
-          click: that.orderByColumn.bind(that, column)
+          "click": that.orderByColumn.bind(that, column)
         },
 
         "class": that.sortableClass(column) },
       [h(
         "span",
-        { "class": "VueTables__heading" },
+        { "class": "VueTables__heading", attrs: { title: that.getHeadingTooltip(column, h) }
+        },
         [that.getHeading(column, h)]
       ), sortControl(column)]
     ));
   }.bind(that));
+
+  if (that.hasChildRow && !that.opts.childRowTogglerFirst) headings.push(h(
+    "th",
+    null,
+    []
+  ));
 
   return headings;
 };

@@ -3,8 +3,9 @@
 module.exports = function () {
   return {
     id: makeId(),
-    rowsToggleState: {},
-    windowWidth: window.innerWidth
+    openChildRows: [],
+    windowWidth: window.innerWidth,
+    userMultiSorting: {}
   };
 };
 

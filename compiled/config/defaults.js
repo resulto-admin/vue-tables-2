@@ -9,6 +9,7 @@ module.exports = function () {
         cancelLabel: 'Clear'
       }
     },
+    initialPage: 1,
     perPage: 10,
     perPageValues: [10, 25, 50, 100],
     params: {},
@@ -17,7 +18,7 @@ module.exports = function () {
     initFilters: {},
     customFilters: [],
     templates: {},
-    debounce: 500,
+    debounce: 250,
     dateFormat: "DD/MM/YYYY",
     toMomentFormat: false,
     skin: "table-striped table-bordered table-hover",
@@ -34,23 +35,36 @@ module.exports = function () {
       defaultOption: 'Select {column}'
     },
     sortIcon: {
+      is: 'glyphicon-sort',
       base: 'glyphicon',
       up: 'glyphicon-chevron-up',
       down: 'glyphicon-chevron-down'
     },
+    sortingAlgorithm: function sortingAlgorithm(data, column) {
+      return data.sort(this.getSortFn(column));
+    },
+
     customSorting: {},
+    multiSorting: {},
+    clientMultiSorting: true,
+    serverMultiSorting: false,
     filterByColumn: false,
     highlightMatches: false,
     orderBy: false,
     footerHeadings: false,
     headings: {},
+    headingsTooltips: {},
     pagination: {
       dropdown: false,
       chunk: 10
     },
     childRow: false,
-    childRowKey: 'id',
+    childRowTogglerFirst: true,
     uniqueKey: 'id',
+    requestFunction: false,
+    requestAdapter: function requestAdapter(data) {
+      return data;
+    },
     responseAdapter: function responseAdapter(resp) {
       return {
         data: resp.data,
@@ -66,7 +80,7 @@ module.exports = function () {
       byColumn: 'byColumn'
     },
     rowClassCallback: false,
-    config: false,
+    preserveState: false,
     saveState: false,
     storage: 'local',
     columnsClasses: {}

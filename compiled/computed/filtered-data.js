@@ -9,12 +9,17 @@ module.exports = function () {
 
   var column = this.orderBy.column;
 
-  data.sort(this.getSortFn(column));
+  if (column) {
+    // dummy var to force compilation
+    if (this.time) this.time = this.time;
+
+    data = this.opts.sortingAlgorithm.call(this, data, column);
+  }
 
   data = this.search(data);
 
   if (this.vuex) {
-    if (this.count != data.length) this.commit('SET_COUNT', data.length, true);
+    if (this.count != data.length) this.commit('SET_COUNT', data.length);
   } else {
     this.count = data.length;
   }

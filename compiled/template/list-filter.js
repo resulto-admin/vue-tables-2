@@ -14,7 +14,10 @@ module.exports = function (h, that) {
       options.push(h(
         'option',
         {
-          attrs: { value: option.id, selected: selected }
+          domProps: {
+            'value': option.id,
+            'selected': selected
+          }
         },
         [option.text]
       ));
@@ -29,18 +32,21 @@ module.exports = function (h, that) {
         'select',
         { 'class': 'form-control',
           on: {
-            change: search
+            'change': search
           },
           attrs: {
-            name: 'vf__' + column,
-            value: that.query[column] }
+            name: 'vf__' + column
+          },
+          domProps: {
+            'value': that.query[column]
+          }
         },
         [h(
           'option',
           {
             attrs: { value: '' }
           },
-          [that.display('defaultOption', { column: that.getHeading(column) })]
+          [that.display('defaultOption', { column: that.opts.headings[column] ? that.opts.headings[column] : column })]
         ), options]
       )]
     );
