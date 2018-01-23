@@ -1,5 +1,6 @@
 'use strict';
 
+// XXX MODIFIED BY RESULTO (added domPropsInnerHTML
 module.exports = function (h, that) {
   var innerNoResults = that.display(that.loading ? 'loading' : 'noResults');
   if (that.count == 0) {

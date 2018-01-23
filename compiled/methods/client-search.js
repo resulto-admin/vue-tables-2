@@ -95,6 +95,7 @@ function foundMatch(query, value, isListFilter) {
 
   // List Filter
   if (isListFilter) {
+    // XXX MODIFIED BY RESULTO (contains instead of exact match)
     if (query.lastIndexOf('invalue:', 0) === 0) {
       return value.indexOf(query.substr(8)) > -1;
     } else {
