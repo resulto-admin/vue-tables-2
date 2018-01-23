@@ -2,6 +2,7 @@
 
 var merge = require('merge');
 
+// XXX MODIFIED BY RESULTO (use range label when possible)
 var getDateLabel = function getDateLabel(startDate, endDate, ranges, dateFormat) {
   var dateLabel = null;
 
@@ -22,6 +23,9 @@ var getDateLabel = function getDateLabel(startDate, endDate, ranges, dateFormat)
 
   return dateLabel;
 };
+var getSingleDateLabel = function getSingleDateLabel(date, dateFormat) {
+  return date.format(dateFormat);
+};
 
 module.exports = function () {
 
@@ -40,11 +44,25 @@ module.exports = function () {
 
   var datepickerOptions = merge.recursive(this.opts.datepickerOptions, {
     autoUpdateInput: false,
-    singleDatePicker: false,
     locale: {
       format: this.opts.dateFormat
     }
   });
+
+  // XXX MODIFIED BY RESULTO
+  // Allow setting `singleDatePicker` from table options, default to false
+  datepickerOptions.singleDatePicker = Boolean(datepickerOptions.singleDatePicker);
+  if (datepickerOptions.singleDatePicker) {
+    // Setting `timePicker` to false automatically configures the widget to use
+    // a time range from 00:00 to 23:59
+    datepickerOptions.timePicker = false;
+  }
+
+  // XXX MODIFIED BY RESULTO
+  // Allow using a different date format for labels
+  if (!that.opts.dateLabelFormat) {
+    that.opts.dateLabelFormat = that.opts.dateFormat;
+  }
 
   that.opts.dateColumns.forEach(function (column) {
 
@@ -60,7 +78,12 @@ module.exports = function () {
 
       if (!that.vuex) that.query = query;
 
-      $(this).text(getDateLabel(picker.startDate, picker.endDate, datepickerOptions.ranges, that.opts.dateFormat));
+      // XXX MODIFIED BY RESULTO
+      if (datepickerOptions.singleDatePicker) {
+        $(this).text(getSingleDateLabel(picker.startDate, that.opts.dateLabelFormat));
+      } else {
+        $(this).text(getDateLabel(picker.startDate, picker.endDate, datepickerOptions.ranges, that.opts.dateLabelFormat));
+      }
 
       that.updateState('query', query);
 
