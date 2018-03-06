@@ -10,8 +10,6 @@ var ClientTable = require('./v-client-table');
 var ServerTable = require('./v-server-table');
 
 
-console.log("XXX hello from the fork");
-
 module.exports = {
   ClientTable: ClientTable,
   ServerTable: ServerTable,

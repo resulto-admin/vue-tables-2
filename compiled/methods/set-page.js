@@ -4,7 +4,10 @@ module.exports = function (page, preventRequest) {
 
   page = page ? page : this.$refs.page.value;
 
-  if (!this.opts.pagination.dropdown) this.$refs.pagination.Page = page;
+  // XXX MODIFIED BY RESULTO (Added check for undefined ref)
+  if (this.$refs.pagination && !this.opts.pagination.dropdown) {
+    this.$refs.pagination.Page = page;
+  }
 
   this.page = page;
 
