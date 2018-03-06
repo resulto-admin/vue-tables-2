@@ -12,6 +12,7 @@ module.exports = function () {
     initialPage: 1,
     perPage: 10,
     perPageValues: [10, 25, 50, 100],
+    groupBy: false,
     params: {},
     sortable: true,
     filterable: true,
@@ -21,18 +22,20 @@ module.exports = function () {
     debounce: 250,
     dateFormat: "DD/MM/YYYY",
     toMomentFormat: false,
-    skin: "table-striped table-bordered table-hover",
+    skin: false,
     columnsDisplay: {},
+    columnsDropdown: false,
     texts: {
       count: "Showing {from} to {to} of {count} records|{count} records|One record",
-      filter: "Filter Results:",
+      filter: "Filter:",
       filterPlaceholder: "Search query",
       limit: "Records:",
       page: "Page:",
       noResults: "No matching records",
       filterBy: "Filter by {column}",
       loading: 'Loading...',
-      defaultOption: 'Select {column}'
+      defaultOption: 'Select {column}',
+      columns: 'Columns'
     },
     sortIcon: {
       is: 'glyphicon-sort',
@@ -56,7 +59,9 @@ module.exports = function () {
     headingsTooltips: {},
     pagination: {
       dropdown: false,
-      chunk: 10
+      chunk: 10,
+      align: 'center',
+      nav: 'fixed'
     },
     childRow: false,
     childRowTogglerFirst: true,
@@ -66,9 +71,12 @@ module.exports = function () {
       return data;
     },
     responseAdapter: function responseAdapter(resp) {
+
+      var data = this.getResponseData(resp);
+
       return {
-        data: resp.data,
-        count: resp.count
+        data: data.data,
+        count: data.count
       };
     },
     requestKeys: {

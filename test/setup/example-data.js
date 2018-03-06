@@ -1,10 +1,12 @@
-var data =   [
+var data = function() {
+return  [
 {
 	code: "ZW",
 	name: "Zimbabwe",
 	created_at: "2015-04-24T01:46:50.459583",
 	updated_at: "2015-04-24T01:46:50.459593",
 	uri: "http://api.lobbyfacts.eu/api/1/country/245",
+	continent:'Africa',
 	id: 245
 },
 {
@@ -13,6 +15,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.457459",
 	updated_at: "2015-04-24T01:46:50.457468",
 	uri: "http://api.lobbyfacts.eu/api/1/country/244",
+	continent:'Africa',	
 	id: 244
 },
 {
@@ -21,6 +24,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.454731",
 	updated_at: "2015-04-24T01:46:50.454741",
 	uri: "http://api.lobbyfacts.eu/api/1/country/243",
+	continent:'Africa',	
 	id: 243
 },
 {
@@ -29,6 +33,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.452002",
 	updated_at: "2015-04-24T01:46:50.452011",
 	uri: "http://api.lobbyfacts.eu/api/1/country/242",
+	continent:'Africa',	
 	id: 242
 },
 {
@@ -37,6 +42,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.449346",
 	updated_at: "2015-04-24T01:46:50.449355",
 	uri: "http://api.lobbyfacts.eu/api/1/country/241",
+	continent:'Asia',	
 	id: 241
 },
 {
@@ -45,6 +51,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.446644",
 	updated_at: "2015-04-24T01:46:50.446652",
 	uri: "http://api.lobbyfacts.eu/api/1/country/240",
+	continent:'Asia',	
 	id: 240
 },
 {
@@ -53,6 +60,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.444031",
 	updated_at: "2015-04-24T01:46:50.444040",
 	uri: "http://api.lobbyfacts.eu/api/1/country/239",
+	continent:'South America',
 	id: 239
 },
 {
@@ -61,6 +69,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.441423",
 	updated_at: "2015-04-24T01:46:50.441433",
 	uri: "http://api.lobbyfacts.eu/api/1/country/238",
+	continent:'Asia',	
 	id: 238
 },
 {
@@ -69,6 +78,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.438748",
 	updated_at: "2015-04-24T01:46:50.438757",
 	uri: "http://api.lobbyfacts.eu/api/1/country/237",
+	continent:'Asia',	
 	id: 237
 },
 {
@@ -77,6 +87,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.435761",
 	updated_at: "2015-04-24T01:46:50.435770",
 	uri: "http://api.lobbyfacts.eu/api/1/country/236",
+	continent:'South America',	
 	id: 236
 },
 {
@@ -85,6 +96,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.433229",
 	updated_at: "2015-04-24T01:46:50.433238",
 	uri: "http://api.lobbyfacts.eu/api/1/country/235",
+	continent:'North America',	
 	id: 235
 },
 {
@@ -93,6 +105,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.430335",
 	updated_at: "2015-04-24T01:46:50.430340",
 	uri: "http://api.lobbyfacts.eu/api/1/country/234",
+	continent:'North America',	
 	id: 234
 },
 {
@@ -101,6 +114,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.427956",
 	updated_at: "2015-04-24T01:46:50.427961",
 	uri: "http://api.lobbyfacts.eu/api/1/country/233",
+	continent:'Europe',	
 	id: 233
 },
 {
@@ -109,6 +123,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.425383",
 	updated_at: "2015-04-24T01:46:50.425392",
 	uri: "http://api.lobbyfacts.eu/api/1/country/232",
+	continent:'Africa',	
 	id: 232
 },
 {
@@ -117,6 +132,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.422970",
 	updated_at: "2015-04-24T01:46:50.422980",
 	uri: "http://api.lobbyfacts.eu/api/1/country/231",
+	continent:'Europe',	
 	id: 231
 },
 {
@@ -125,6 +141,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.419963",
 	updated_at: "2015-04-24T01:46:50.419968",
 	uri: "http://api.lobbyfacts.eu/api/1/country/230",
+	continent:'Africa',	
 	id: 230
 },
 {
@@ -133,6 +150,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.417896",
 	updated_at: "2015-04-24T01:46:50.417906",
 	uri: "http://api.lobbyfacts.eu/api/1/country/229",
+	continent:'Asia',	
 	id: 229
 },
 {
@@ -141,6 +159,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.414854",
 	updated_at: "2015-04-24T01:46:50.414868",
 	uri: "http://api.lobbyfacts.eu/api/1/country/228",
+	continent:'North America',
 	id: 228
 },
 {
@@ -149,6 +168,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.412601",
 	updated_at: "2015-04-24T01:46:50.412605",
 	uri: "http://api.lobbyfacts.eu/api/1/country/227",
+	continent:'Asia',
 	id: 227
 },
 {
@@ -157,6 +177,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.411105",
 	updated_at: "2015-04-24T01:46:50.411110",
 	uri: "http://api.lobbyfacts.eu/api/1/country/226",
+	continent:'Asia',
 	id: 226
 },
 {
@@ -165,6 +186,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.409535",
 	updated_at: "2015-04-24T01:46:50.409539",
 	uri: "http://api.lobbyfacts.eu/api/1/country/225",
+	continent:'Africa',
 	id: 225
 },
 {
@@ -173,6 +195,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.408030",
 	updated_at: "2015-04-24T01:46:50.408034",
 	uri: "http://api.lobbyfacts.eu/api/1/country/224",
+	continent:'North America',	
 	id: 224
 },
 {
@@ -181,6 +204,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.406306",
 	updated_at: "2015-04-24T01:46:50.406311",
 	uri: "http://api.lobbyfacts.eu/api/1/country/223",
+	continent:'Australia',
 	id: 223
 },
 {
@@ -189,6 +213,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.404794",
 	updated_at: "2015-04-24T01:46:50.404799",
 	uri: "http://api.lobbyfacts.eu/api/1/country/222",
+	continent:'Australia',
 	id: 222
 },
 {
@@ -197,6 +222,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.403306",
 	updated_at: "2015-04-24T01:46:50.403310",
 	uri: "http://api.lobbyfacts.eu/api/1/country/221",
+	continent:'Africa',	
 	id: 221
 },
 {
@@ -205,6 +231,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.400840",
 	updated_at: "2015-04-24T01:46:50.400849",
 	uri: "http://api.lobbyfacts.eu/api/1/country/220",
+	continent:'Asia',	
 	id: 220
 },
 {
@@ -213,6 +240,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.397846",
 	updated_at: "2015-04-24T01:46:50.397855",
 	uri: "http://api.lobbyfacts.eu/api/1/country/219",
+	continent:'Africa',	
 	id: 219
 },
 {
@@ -221,6 +249,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.394924",
 	updated_at: "2015-04-24T01:46:50.394933",
 	uri: "http://api.lobbyfacts.eu/api/1/country/218",
+	continent:'Asia',	
 	id: 218
 },
 {
@@ -229,6 +258,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.391969",
 	updated_at: "2015-04-24T01:46:50.391978",
 	uri: "http://api.lobbyfacts.eu/api/1/country/217",
+	continent:'Asia',	
 	id: 217
 },
 {
@@ -237,6 +267,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.389120",
 	updated_at: "2015-04-24T01:46:50.389124",
 	uri: "http://api.lobbyfacts.eu/api/1/country/216",
+	continent:'Europe',	
 	id: 216
 },
 {
@@ -245,6 +276,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.386939",
 	updated_at: "2015-04-24T01:46:50.386943",
 	uri: "http://api.lobbyfacts.eu/api/1/country/215",
+	continent:'Europe',	
 	id: 215
 },
 {
@@ -253,6 +285,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.385345",
 	updated_at: "2015-04-24T01:46:50.385349",
 	uri: "http://api.lobbyfacts.eu/api/1/country/214",
+	continent:'Europe',	
 	id: 214
 },
 {
@@ -261,6 +294,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.383834",
 	updated_at: "2015-04-24T01:46:50.383838",
 	uri: "http://api.lobbyfacts.eu/api/1/country/213",
+	continent:'Africa',	
 	id: 213
 },
 {
@@ -269,6 +303,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.382073",
 	updated_at: "2015-04-24T01:46:50.382078",
 	uri: "http://api.lobbyfacts.eu/api/1/country/212",
+	continent:'Asia',	
 	id: 212
 },
 {
@@ -277,6 +312,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.380114",
 	updated_at: "2015-04-24T01:46:50.380119",
 	uri: "http://api.lobbyfacts.eu/api/1/country/211",
+	continent:'Africa',	
 	id: 211
 },
 {
@@ -285,6 +321,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.378189",
 	updated_at: "2015-04-24T01:46:50.378195",
 	uri: "http://api.lobbyfacts.eu/api/1/country/210",
+	continent:'Asia',	
 	id: 210
 },
 {
@@ -293,6 +330,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.376105",
 	updated_at: "2015-04-24T01:46:50.376109",
 	uri: "http://api.lobbyfacts.eu/api/1/country/209",
+	continent:'Europe',	
 	id: 209
 },
 {
@@ -301,6 +339,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.373942",
 	updated_at: "2015-04-24T01:46:50.373946",
 	uri: "http://api.lobbyfacts.eu/api/1/country/208",
+	continent:'Africa',	
 	id: 208
 },
 {
@@ -309,6 +348,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.371790",
 	updated_at: "2015-04-24T01:46:50.371794",
 	uri: "http://api.lobbyfacts.eu/api/1/country/207",
+	continent:'Asia',	
 	id: 207
 },
 {
@@ -317,6 +357,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.369460",
 	updated_at: "2015-04-24T01:46:50.369465",
 	uri: "http://api.lobbyfacts.eu/api/1/country/206",
+	continent:'Asia',	
 	id: 206
 },
 {
@@ -325,6 +366,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.367247",
 	updated_at: "2015-04-24T01:46:50.367252",
 	uri: "http://api.lobbyfacts.eu/api/1/country/205",
+	continent:'Africa',	
 	id: 205
 },
 {
@@ -333,6 +375,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.362905",
 	updated_at: "2016-09-18T18:34:35.724427",
 	uri: "http://api.lobbyfacts.eu/api/1/country/204",
+	continent:'Africa',	
 	id: 204
 },
 {
@@ -341,6 +384,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.360631",
 	updated_at: "2015-04-24T01:46:50.360635",
 	uri: "http://api.lobbyfacts.eu/api/1/country/203",
+	continent:'Asia',	
 	id: 203
 },
 {
@@ -349,6 +393,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.358394",
 	updated_at: "2015-04-24T01:46:50.358399",
 	uri: "http://api.lobbyfacts.eu/api/1/country/202",
+	continent:'Europe',	
 	id: 202
 },
 {
@@ -357,6 +402,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.356154",
 	updated_at: "2015-04-24T01:46:50.356158",
 	uri: "http://api.lobbyfacts.eu/api/1/country/201",
+	continent:'Europe',	
 	id: 201
 },
 {
@@ -365,6 +411,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.353807",
 	updated_at: "2015-04-24T01:46:50.353811",
 	uri: "http://api.lobbyfacts.eu/api/1/country/200",
+	continent:'North America',	
 	id: 200
 },
 {
@@ -373,6 +420,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.349354",
 	updated_at: "2015-04-24T01:46:50.349358",
 	uri: "http://api.lobbyfacts.eu/api/1/country/199",
+	continent:'Asia',	
 	id: 199
 },
 {
@@ -381,6 +429,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.347186",
 	updated_at: "2015-04-24T01:46:50.347190",
 	uri: "http://api.lobbyfacts.eu/api/1/country/198",
+	continent:'Africa',	
 	id: 198
 },
 {
@@ -389,6 +438,7 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.344980",
 	updated_at: "2015-04-24T01:46:50.344984",
 	uri: "http://api.lobbyfacts.eu/api/1/country/197",
+	continent:'North America',	
 	id: 197
 },
 {
@@ -397,8 +447,11 @@ var data =   [
 	created_at: "2015-04-24T01:46:50.342496",
 	updated_at: "2015-04-24T01:46:50.342501",
 	uri: "http://api.lobbyfacts.eu/api/1/country/196",
+	continent:'Europe',
 	id: 196
 }
 ];
+
+}();
 
 export default data;

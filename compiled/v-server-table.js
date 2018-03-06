@@ -27,9 +27,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var _data = require('./mixins/data');
 var _created = require('./mixins/created');
 
-var template = require('./template');
+var templateCompiler = require('./template-compiler');
 
-exports.install = function (Vue, globalOptions, useVuex, customTemplate) {
+exports.install = function (Vue, globalOptions, useVuex) {
+  var theme = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'bootstrap3';
+  var template = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 'default';
+
 
   var state = useVuex ? (0, _vuex2.default)('server') : (0, _normal2.default)();
 
@@ -38,7 +41,7 @@ exports.install = function (Vue, globalOptions, useVuex, customTemplate) {
     components: {
       Pagination: _vuePagination.Pagination
     },
-    render: customTemplate ? customTemplate : template('server'),
+    render: templateCompiler.call(this, template, theme),
     props: {
       columns: {
         type: Array,
@@ -74,8 +77,7 @@ exports.install = function (Vue, globalOptions, useVuex, customTemplate) {
 
       this.getData(true).then(function (response) {
 
-        var data = this.getResponseData(response);
-        this.setData(this.opts.responseAdapter.call(this.$root, data));
+        this.setData(response);
 
         this.loading = false;
 
@@ -104,12 +106,6 @@ exports.install = function (Vue, globalOptions, useVuex, customTemplate) {
       this.registerServerFilters();
 
       if (this.options.initialPage) this.setPage(this.options.initialPage, true);
-
-      _vuePagination.PaginationEvent.$on('vue-pagination::' + this.id, function (page) {
-
-        this.setPage(page);
-        this.dispatch('pagination');
-      }.bind(this));
     },
     data: function data() {
       return _merge2.default.recursive(_data(), {
@@ -165,6 +161,7 @@ exports.install = function (Vue, globalOptions, useVuex, customTemplate) {
     },
     computed: {
       totalPages: require('./computed/total-pages'),
+      filteredQuery: require('./computed/filtered-query'),
       hasMultiSort: function hasMultiSort() {
         return this.opts.serverMultiSorting;
       }

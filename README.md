@@ -1,12 +1,8 @@
 # Vue Tables 2
 
-[![npm version](https://badge.fury.io/js/vue-tables-2.svg)](https://badge.fury.io/js/vue-tables-2) [![GitHub stars](https://img.shields.io/github/stars/matfish2/vue-tables-2.svg)](https://github.com/matfish2/vue-tables-2/stargazers) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/matfish2/vue-tables-2/master/LICENSE) [![npm](https://img.shields.io/npm/dt/vue-tables-2.svg)](https://www.npmjs.com/package/vue-tables-2) [![Build Status](https://travis-ci.org/matfish2/vue-tables-2.svg?branch=master)](https://travis-ci.org/matfish2/vue-tables-2)
+[![npm version](https://badge.fury.io/js/vue-tables-2.svg)](https://badge.fury.io/js/vue-tables-2) [![GitHub stars](https://img.shields.io/github/stars/matfish2/vue-tables-2.svg)](https://github.com/matfish2/vue-tables-2/stargazers) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/matfish2/vue-tables-2/master/LICENSE) [![npm](https://img.shields.io/npm/dt/vue-tables-2.svg)](https://www.npmjs.com/package/vue-tables-2) [![Build Status](https://travis-ci.org/matfish2/vue-tables-2.svg?branch=master)](https://travis-ci.org/matfish2/vue-tables-2) [![](https://data.jsdelivr.com/v1/package/npm/vue-tables-2/badge)](https://www.jsdelivr.com/package/npm/vue-tables-2)
 
 [Click here](https://jsfiddle.net/matfish2/jfa5t4sm/) to see it in action and fiddle with the various [options](#options)
-
-To help me maintain this project and add cool new features at your request, any donation would be appreciated.
-
-[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=W7EU772PUC3V4)
 
 - [Usage](#usage)
 - [Dependencies](#dependencies)
@@ -25,6 +21,7 @@ To help me maintain this project and add cool new features at your request, any 
 - [Client Side Filters](#client-side-filters)
 - [Server Side Filters](#server-side-filters)
 - [List Filters](#list-filters)
+- [Columns Visibility](#columns-visibility)
 - [Custom Sorting](#custom-sorting)
 - [Client Side Sorting](#client-side-sorting)
 - [Server Side Sorting](#server-side-sorting)
@@ -43,7 +40,7 @@ To help me maintain this project and add cool new features at your request, any 
 ## Compatibility
 
 * Vuex (>=2.0)
-* Bootstrap 3 compatible html output
+* Bootstrap 3 / Bootstrap 4 / Bulma
 
 ## Installation
 
@@ -60,29 +57,31 @@ import {ServerTable, ClientTable, Event} from 'vue-tables-2';
 ### Register the component(s)
 
 ```js
-Vue.use(ClientTable, [options], [useVuex], [customTemplate]);
+Vue.use(ClientTable, [options = {}], [useVuex = false], [theme = 'bootstrap3'], [template = 'default']);
 ```
 
 Or/And:
 
 ```js
-Vue.use(ServerTable, [options], [useVuex], [customTemplate]);
+Vue.use(ServerTable, [options = {}], [useVuex = false], [theme = 'bootstrap3'], [template = 'default']);
 ```
 
 * `useVuex` is a boolean indicating whether to use `vuex` for state management, or manage state on the component itself.
-If you set it to `true` you must add a `name` prop to your table, which will be used to to register a module on your store.
+If you set it to `true` you must add a `name` prop to your table, which will be used to register a module on your store.
 Use `vue-devtools` to look under the hood and see the current state.
 
-* `customTemplate` argument allows you to pass a custom template for the entire table.
-You can find the main template file under `lib/template.js`, which in turn requires the partials in the `template` folder.
-The template is written using `jsx`, so you will need a [jsx compiler](https://github.com/vuejs/babel-plugin-transform-vue-jsx) to modify it (the package is using the compiled version under the `compiled` folder).
-Copy it to your project and modify to your needs.
+> Note: If you are using `vue-router` or simply toggling the table with `v-if`, set the `preserveState` option to `true`.
 
-> Note: The template file is a function that receives a `source` parameter (`client` or `server`). E.g:
+* `theme` Use this option to select a CSS framework. Options:'bootstrap3','bootstrap4','bulma'. 
+You can also pass you own theme. Use a file from the `themes` folder as boilerplate.
 
-```js
-Vue.use(ClientTable, {}, false, require('./template.js')('client'))
-```
+* `template` Use this option to select an HTML template. Currently supported: 'default', 'footerPagination'
+You can also pass your own template. Use a file from the `templates` folder as boilerplate.
+
+> Note: You may need to add a little styling of your own. 
+If you come up with some improvments to the templates or themes, which brings them closer to the optimum, you are welcome to send a PR.
+
+> Note: The template is written using `jsx`, so you will need a [jsx compiler](https://github.com/vuejs/babel-plugin-transform-vue-jsx) to modify it (the package is using the compiled version under the `compiled` folder).
 
 ### Using Script Tag
 
@@ -92,6 +91,8 @@ Copy the file into your project and import it:
 ```html
 <script src="/path/to/vue-tables-2.min.js"></script>
 ```
+
+Or, if you prefer, use the [CDN version](https://www.jsdelivr.com/package/npm/vue-tables-2?path=dist).
 
 This will expose a global `VueTables` object containing `ClientTable`, `ServerTable` and `Event` as properties.
 
@@ -192,7 +193,7 @@ options: {
 
 ### Implementations
 
-I have included [an Eloquent implementation](https://github.com/matfish2/vue-tables/tree/master/server/PHP) for Laravel Users.
+I have included [an Eloquent implementation](https://raw.githubusercontent.com/matfish2/vue-tables-2/master/server/PHP/EloquentVueTables.php) for Laravel Users.
 
 If you happen to write other implementations for PHP or other languages, a pull request would be most welcome, under the following guidelines:
 
@@ -324,8 +325,6 @@ app.vue
 
 > Note: Don't include HTML directly in your dataset, as it will be parsed as plain text.
 
-> CSS Note: to center the pagination apply `text-align:center` to the wrapping element
-
 # Child Rows
 
 Child rows allow for a custom designed output area, namely a hidden child row underneath each row, whose content you are free to set yourself.
@@ -402,7 +401,8 @@ Call methods on your instance using the [`ref`](http://vuejs.org/api/#ref) attri
 * `setLimit(recordsPerPage)`
 * `setOrder(column, isAscending)`
 * `setFilter(query)` - `query` should be a string, or an object if `filterByColumn` is set to `true`.
-* `refresh()` Refresh the table. Server component only
+* `getData()` Get table data using the existing request parameters. Server component only.
+* `refresh()` Refresh the table. This method is simply a wrapper for the `serverSearch` method, and thus resets the pagination. Server component only
 * `getOpenChildRows(rows = null)` 
 If no argument is supplied returns all open child row components in the page. 
 To limit the returned dataset you can pass the `rows` arguemnt, which should be an array of unique identifiers.
@@ -537,7 +537,8 @@ options: {
             },
             {
                 id: 2,
-                text: 'Cat'
+                text: 'Cat',
+                hide:true
             },
             {
                 id: 3,
@@ -554,6 +555,15 @@ options: {
 
 > Note: The values of this column should correspond to the `id`'s passed to the list.
 They will be automatically converted to their textual representation.
+
+> Adding `hide:true` to an item, will exclude it from the options presented to the user
+
+# Columns Visibility
+
+If you would like to enable the user to control the columns' visibility set the `columnsDropdown` option to `true`.
+This will add a dropdown button to the left of the per-page control. The drop down will contain a list of the columns with checkboxes to toggle visibility.
+
+The `columnsDropdown` option can work in conjunction with `columnsDisplay`. The rule is that as long as the user hasn't toggled a column himself, the rules you have declared in `columnsDisplay` takes precedence. Once the user toggled a column, he is in charge of columns' visibility, and the settings of `columnsDisplay` are disregarded. 
 
 # Custom Sorting
 
@@ -622,14 +632,11 @@ To enable it set `serverMultiSorting` to `true`. The request will then contain a
 Slots allow you to insert you own custom HTML in predefined positions within the component:
 
 * `beforeTable`: Before the table wrapper. After the controls row
+* `afterTable`: Before the table wrapper. 
 * `beforeFilter`: Before the global filter (`filterByColumn: false`)
 * `afterFilter`: After the global filter
-* `appendFilterContainer`: Append to global filter container (`filterByColumn: false`)
-* `prependFilterContainer`: Prepend to global filter container
 * `beforeLimit`: Before the per page control
 * `afterLimit`: After the per page control
-* `appendLimitContainer`: Append to per page control container
-* `prependLimitContainer`: Prepend to per page control container
 * `beforeFilters`: Before the filters row (`filterByColumn: true`)
 * `afterFilters`: After the filters row
 * `beforeBody`: Before the `<tbody>` tag
@@ -674,6 +681,7 @@ childRowTogglerFirst | Boolean | Should the child row be positioned at the first
 clientMultiSorting | Boolean | Enable multiple columns sorting using Shift + Click on the client component | `true`
 columnsClasses | Object | Add class(es) to the specified columns.<br> Takes key-value pairs, where the key is the column name and the value is a string of space-separated classes | `{}`
 columnsDisplay | Object | Responsive display for the specified columns.<br><br> Columns will only be shown when the window width is within the defined limits. <br><br>Accepts key-value pairs of column name and device.<br><br> Possible values are `mobile` (x < 480), `mobileP` (x < 320), `mobileL` (320 <= x < 480), `tablet` (480 <= x < 1024), `tabletP` (480 <= x < 768), `tabletL` (768 <= x < 1024), `desktop` (x >= 1024).<br><br> All options can be preceded by the logical operators min,max, and not followed by an underscore.<br><br>For example, a column which is set to `not_mobile` will be shown when the width of the window is greater than or equal to 480px, while a column set to `max_tabletP` will only be shown when the width is under 768px | `{}`
+columnsDropdown | Boolean | See [documentation](#columns-visibility) | `false`
 customFilters | Array | See [documentation](#custom-filters) | `[]`
 customSorting (client-side) | Object | See [documentation](#custom-sorting) | `{}`
 dateColumns | Array | Use daterangepicker as a filter for the specified columns (when filterByColumn is set to true).<br><br>Dates should be passed as moment objects, or as strings in conjunction with the toMomentFormat option | `[]`
@@ -683,6 +691,7 @@ debounce | Number | Number of idle milliseconds (no key stroke) to wait before s
 filterable | Array / Boolean | Filterable columns `true` - All columns. | Set to `false` or an `empty array` to hide the filter(s). Affects also the single filter mode (`filterByColumn:false`)
 footerHeadings | Boolean | Display headings at the bottom of the table too | `false`
 headings | Object | Table headings. | Can be either a string or a function, if you wish to inject vue-compiled HTML.<br>E.g: `function(h) { return <h2>Title</h2>}`<br>Note that this example uses jsx, and not HTML.<br>The `this` context inside the function refers to the direct parent of the table instance.<br> If you are using vue 2.1 and above you can also use scoped slots, naming the slot "h__{column}"<br>The default rule is to extract from the first row properties with the underscores become spaces and the first letter capitalized
+groupBy (client-side) | String | Group rows by a common property. E.g, for a list of countries, group by the `continent` property | `false`
 headingsTooltips | Object | Table headings tooltips. | Can be either a string or a function, if you wish to inject vue-compiled HTML. Renders as `title` attribute of `<th>`. <br>E.g: `function(h) { return 'Expanded Title'}`<br>The `this` context inside the function refers to the direct parent of the table instance.
 highlightMatches | Boolean | Highlight matches | `false`
 initFilters | Object | Set initial values for all filter types: generic, by column or custom.<br><br> Accepts an object of key-value pairs, where the key is one of the following: <br><br>a. "GENERIC" - for the generic filter<br>b. column name - for by column filters.<br>c. filter name - for custom filters. <br><br>In case of date filters the date range should be passed as an object comprised of start and end properties, each being a moment object. | `{}`
@@ -693,23 +702,25 @@ orderBy.ascending | Boolean | initial order direction | `orderBy: { ascending:tr
 orderBy.column | String | initial column to sort by | Original dataset order
 pagination.chunk | Number | maximum pages in a chunk of pagination | `pagination: { chunk:10 }`
 pagination.dropdown | Boolean | use a dropdown select pagination next to the records-per-page list, instead of links at the bottom of the table. | `pagination: { dropdown:false }`
+pagination.nav | String | Which method to use when navigating outside of chunk boundries. Options are : `scroll` - the range of pages presented will incrementally change when navigating to a page outside the chunk (e.g 1-10 will become 2-11 once the user presses the next arrow to move to page 11). `fixed` - navigation will occur between fixed chunks (e.g 1-10, 11-20, 21-30 etc.). Double arrows will be added to allow navigation to the beginning of the previous or next chunk | `pagination: { nav: 'fixed' }` 
 params (server-side) | Object | Additional parameters to send along with the request | `{}`
 perPage | number | Initial records per page | `10`
 perPageValues | Array | Records per page options | `[10,25,50,100]`
+preserveState | Boolean | Preserve dynamically created vuex module when the table is destroyed | `false`
 requestAdapter (server-side) | Function | Set a custom request format | `function(data) { return data; }`
 requestFunction (server-side) | Function | Set a custom request function | See documentation
 requestKeys (server-side) | Object | Set your own request keys | `{ query:'query', limit:'limit', orderBy:'orderBy', ascending:'ascending', page:'page', byColumn:'byColumn' }`
-responseAdapter (server-side) | Function | Transform the server response to match the format expected by the client. This is especially useful when calling a foreign API, where you cannot control the response on the server-side | `function(resp) { return { data: resp.data, count: resp.count } }`
+responseAdapter (server-side) | Function | Transform the server response to match the format expected by the client. This is especially useful when calling a foreign API, where you cannot control the response on the server-side | `function(resp) { var data = this.getResponseData(resp); return { data: data.data, count: data.count } }`
 rowClassCallback | Function | Add dynamic classes to table rows.<br><br> E.g function(row) { return `row-${row.id}`} <br><br>This can be useful for manipulating the appearance of rows based on the data they contain | `false`
 saveState | Boolean | Constantly save table state and reload it each time the component mounts. When setting it to true, use the `name` prop to set an identifier for the table | `false`
 serverMultiSorting | Boolean | Enable multiple columns sorting using Shift + Click on the server component | `false`
-skin | String | Space separated Bootstrap table styling classes | `table-striped table-bordered table-hover`
+skin | String | Space separated table styling classes | `table-striped table-bordered table-hover`
 sortIcon | String | Sort icon classes | `{ base:'glyphicon', up:'glyphicon-chevron-up', down:'glyphicon-chevron-down', is:'glyphicon-sort' }`
 sortable | Array |  Sortable columns | All columns
 sortingAlgorithm | Function | define your own sorting algorithm  | `function (data, column) { return data.sort(this.getSortFn(column));}`
 storage | String | Which persistance mechanism should be used when saveState is set to true: `local` - localStorage. `session` - sessionStorage | `local`
 templates | Object | See [documentation](#templates) | {}
-texts | Object | Table default labels:<br><br><code>{ count:'Showing {from} to {to} of {count} records {count} records&#124;{count} records&#124;One record', filter:'Filter Results:',filterPlaceholder:'Search query', limit:'Records:', noResults:'No matching records', page:'Page:', // for dropdown pagination filterBy: 'Filter by {column}', // Placeholder for search fields when filtering by column loading:'Loading...', // First request to server defaultOption:'Select {column}' // default option for list filters }</code>
+texts | Object | see the `texts` object in [defaults.js](https://github.com/matfish2/vue-tables-2/blob/master/lib/config/defaults.js)</code>
 toMomentFormat (client-side) | String | transform date columns string values to momentjs objects using this format. If this option is not used the consumer is expected to pass momentjs objects himself | `false`
 uniqueKey | String | The key of a unique identifier in your dataset, used to track the child rows, and return the original row in row click event | `id`
 

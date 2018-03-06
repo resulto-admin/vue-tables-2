@@ -35,6 +35,35 @@ describe(suite  + ': Filters (Common)', function() {
 
 	});
 
+	it('can hide some options in list filters', ()=>{
+		createWrapper({
+			filterByColumn:true, 
+			listColumns:{
+				id:[
+				{
+					id:245,
+					text:'Zimbabwe'
+				},
+				{
+					id:244,
+					text:'Zambia',
+					hide:true
+				},
+				{
+					id:243,
+					text:'Yemen'
+				}
+				]
+			}}, ['id','name','code','uri']);
+
+		
+			see('Select id', '.VueTables__filters-row select[name="vf__id"] option:first-child');
+			see('Zimbabwe', '.VueTables__filters-row select[name="vf__id"] option:nth-child(2)');
+			not_see('Zambia', '.VueTables__filters-row select[name="vf__id"]');
+			see('Yemen', '.VueTables__filters-row select[name="vf__id"] option:nth-child(3)');
+
+	});
+
 	it('can display date filters', ()=>{
 
 		createWrapper({
@@ -44,6 +73,16 @@ describe(suite  + ': Filters (Common)', function() {
 
 		exists('#VueTables__created_at-filter.VueTables__date-filter');
 
+	});
+
+	it('can hide the generic filter (regression test for #377)', () =>{
+		exists('.VueTables__search-field');
+
+		setOptions({
+			filterable:false
+		})
+
+		not_exists('.VueTables__search-field');
 	});
 	
 });

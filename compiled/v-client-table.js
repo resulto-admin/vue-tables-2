@@ -27,16 +27,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var _data = require('./mixins/data');
 var _created = require('./mixins/created');
 
-var template = require('./template');
+var templateCompiler = require('./template-compiler');
 
-exports.install = function (Vue, globalOptions, useVuex, customTemplate) {
+exports.install = function (Vue, globalOptions, useVuex) {
+  var theme = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'bootstrap3';
+  var template = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 'default';
+
 
   var client = _merge2.default.recursive(true, (0, _table2.default)(), {
     name: 'client-table',
     components: {
       Pagination: _vuePagination.Pagination
     },
-    render: customTemplate ? customTemplate : template('client'),
+    render: templateCompiler.call(this, template, theme),
     props: {
       columns: {
         type: Array,
@@ -85,11 +88,10 @@ exports.install = function (Vue, globalOptions, useVuex, customTemplate) {
         this.registerClientFilters();
 
         if (this.options.initialPage) this.setPage(this.options.initialPage);
+      }
 
-        _vuePagination.PaginationEvent.$on('vue-pagination::' + this.id, function (page) {
-          this.setPage(page);
-          this.dispatch('pagination', page);
-        }.bind(this));
+      if (this.opts.groupBy && !this.opts.orderBy) {
+        this.orderBy.column = this.opts.groupBy;
       }
 
       this.loadState();

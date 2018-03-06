@@ -2,7 +2,7 @@ global.moment = require('moment');
 
 // setup JSDOM
 require('jsdom-global')()
-
+window.localStorage = require('mock-local-storage');
 // make expect available globally
 global.expect = require('expect')
 
@@ -14,6 +14,10 @@ global.see = function(text, selector) {
 
 	var el = selector?wrapper.find(selector):wrapper;
 
+	if (!text) {
+		expect(el.text()).toEqual(text);
+	}
+	
 	expect(el.text()).toContain(text);
 
 }
@@ -42,7 +46,8 @@ global.not_exists = function(selector) {
 }
 
 global.count = function(selector, count) {
-	expect(wrapper.findAll(selector)).toHaveLength(count);
+	var wrappers = wrapper.findAll(selector).length;
+	expect(wrappers).toEqual(count);
 }
 
 global.setOptions = function(options) {
