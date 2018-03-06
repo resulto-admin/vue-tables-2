@@ -19,7 +19,7 @@ module.exports = function () {
     initFilters: {},
     customFilters: [],
     templates: {},
-    debounce: 250,
+    debounce: 1100,
     dateFormat: "DD/MM/YYYY",
     toMomentFormat: false,
     skin: false,
