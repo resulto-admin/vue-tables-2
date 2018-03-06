@@ -25,7 +25,8 @@ module.exports = function (h, modules, classes, slots) {
     ), modules.normalFilter(classes, filterId)]
   );
 
-  var perpage = perpageValues.length > 1 ? h(
+  // XXX MODIFIED BY RESULTO (always show per page limit dropdown)
+  var perpage = h(
     'div',
     { 'class': 'VueTables__limit-field' },
     [h(
@@ -34,7 +35,7 @@ module.exports = function (h, modules, classes, slots) {
       },
       [this.display('limit')]
     ), modules.perPage(perpageValues, classes.select, perpageId)]
-  ) : '';
+  );
 
   var dropdownPagination = this.opts.pagination && this.opts.pagination.dropdown ? h(
     'div',

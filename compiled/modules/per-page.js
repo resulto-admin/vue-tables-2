@@ -5,7 +5,8 @@ module.exports = function (h) {
 
   return function (perpageValues, cls, id) {
 
-    return perpageValues.length > 1 ? h(
+    // XXX MODIFIED BY RESULTO (always show per page limit dropdown)
+    return h(
       "select",
       { "class": cls,
         attrs: { name: "limit",
@@ -20,6 +21,6 @@ module.exports = function (h) {
         }
       },
       [perpageValues]
-    ) : '';
+    );
   };
 };
