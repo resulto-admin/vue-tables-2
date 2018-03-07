@@ -21,17 +21,23 @@ module.exports = function (h) {
     if (_this.count === 0) {
 
       var colspan = _this.allColumns.length;
+      var innerNoResults = _this.display(_this.loading ? 'loading' : 'noResults');
       if (_this.hasChildRow) colspan++;
 
+      // XXX MODIFIED BY RESULTO (added domPropsInnerHTML)
       return h(
         'tr',
         { 'class': 'VueTables__no-results' },
         [h(
           'td',
           { 'class': 'text-center',
-            attrs: { colspan: _this.colspan }
+            attrs: { colspan: _this.colspan
+            },
+            domProps: {
+              'innerHTML': innerNoResults
+            }
           },
-          [_this.display(_this.loading ? 'loading' : 'noResults')]
+          []
         )]
       );
     }
