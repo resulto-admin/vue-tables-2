@@ -16,7 +16,9 @@
   - [Vue Components](#vue-components)
 - [Child Rows](#child-rows)
 - [Methods](#methods)
+- [Properties](#properties)
 - [Events](#events)
+- [Date Columns](#date-columns)
 - [Custom Filters](#custom-filters)
 - [Client Side Filters](#client-side-filters)
 - [Server Side Filters](#server-side-filters)
@@ -411,7 +413,13 @@ Note:
 A. This method is only to be used when the child row is a component. 
 B. In order for this method to work you need to set the `name` property on your component to `ChildRow`
 
-### Events
+# Properties
+
+Get properties off your instance using the [`ref`](http://vuejs.org/api/#ref) attribute.
+
+* `openChildRows` `array` The ids of all the currently open child rows
+
+# Events
 
 Using Custom Events (For child-parent communication):
 
@@ -481,6 +489,28 @@ Fires off if the server returns an invalid code. Sends through the error
 Fires off after a row was clicked. sends through the row and the mouse event.
 When using the client component, if you want to recieve the *original* row, so that it can be directly mutated, you must have a unique row identifier.
 The key defaults to `id`, but can be changed using the `uniqueKey` option.
+
+# Date Columns
+
+For date columns you can use [daterangepicker](https://github.com/dangrossman/bootstrap-daterangepicker) as a filter instead of the normal free-text input. Note that you must import all the dependencies (JQuery + moment.js + daterangepicker) GLOBALLY, i.e on the `window` scope. You can check if this is so by typing `typeof $().daterangepicker` in the console. If it returns `function` you are good to go.
+To tell the plugin which columns should be treated as date columns use the `dateColumns` option. (E.g: `dateColumns:['created_at','executed_at']`).
+
+For the client component the date must be rendered as a `moment` object for the filtering to work. You can use the `toMomentFormat` option to do that for you. It accepts the current format of the dates in your dataset, and uses it to convert those dates to `moment` objects. E.g, if you have a `created_at` column with a date like `2017-12-31`, you can use `toMomentFormat: 'YYYY-MM-DD'`. To decide the presentation of the dates use the `dateFormat` option.
+
+On the server component the filter will be sent along with the request in the following format: 
+
+```js
+{
+    query:{
+        created_at:{
+            start: '2010-12-31 00:00:00',
+            end: '2011-12-31 00:00:00'       
+        }
+    }
+}
+``` 
+
+date presentation on the server component is completely up to you. If you are unable to control the server response, you can use the `templates` option to "massage" the date you get from the server into the desired format.
 
 # Custom Filters
 
@@ -687,10 +717,11 @@ customSorting (client-side) | Object | See [documentation](#custom-sorting) | `{
 dateColumns | Array | Use daterangepicker as a filter for the specified columns (when filterByColumn is set to true).<br><br>Dates should be passed as moment objects, or as strings in conjunction with the toMomentFormat option | `[]`
 dateFormat (client-side) | String | Format to display date objects. Using [momentjs](https://momentjs.com/) | `DD/MM/YYYY`
 datepickerOptions | Object | Options for the daterangepicker when using a date filter (see dateColumns) | `{ locale: { cancelLabel: 'Clear' } }`
+datepickerPerColumnOptions | Object | additional options for specific columns, to be merged with `datepickerOptions`. Expects an object where the key is a column name, and the value is an options object | `{}`
 debounce | Number | Number of idle milliseconds (no key stroke) to wait before sending a request. Used to detect when the user finished his query in order to avoid redundant requests (server) or rendering (client) | `500`
 filterable | Array / Boolean | Filterable columns `true` - All columns. | Set to `false` or an `empty array` to hide the filter(s). Affects also the single filter mode (`filterByColumn:false`)
 footerHeadings | Boolean | Display headings at the bottom of the table too | `false`
-headings | Object | Table headings. | Can be either a string or a function, if you wish to inject vue-compiled HTML.<br>E.g: `function(h) { return <h2>Title</h2>}`<br>Note that this example uses jsx, and not HTML.<br>The `this` context inside the function refers to the direct parent of the table instance.<br> If you are using vue 2.1 and above you can also use scoped slots, naming the slot "h__{column}"<br>The default rule is to extract from the first row properties with the underscores become spaces and the first letter capitalized
+headings | Object | Table headings. | Can be either a string or a function, if you wish to inject vue-compiled HTML.<br>E.g: `function(h) { return <h2>Title</h2>}`<br>Note that this example uses jsx, and not HTML.<br>The `this` context inside the function refers to the direct parent of the table instance.<br> Another option is to use a slot, named "h__{column}"<br>If no heading is provided the default rule is to extract it from the first row properties, where underscores become spaces and the first letter is capitalized
 groupBy (client-side) | String | Group rows by a common property. E.g, for a list of countries, group by the `continent` property | `false`
 headingsTooltips | Object | Table headings tooltips. | Can be either a string or a function, if you wish to inject vue-compiled HTML. Renders as `title` attribute of `<th>`. <br>E.g: `function(h) { return 'Expanded Title'}`<br>The `this` context inside the function refers to the direct parent of the table instance.
 highlightMatches | Boolean | Highlight matches | `false`
@@ -703,6 +734,7 @@ orderBy.column | String | initial column to sort by | Original dataset order
 pagination.chunk | Number | maximum pages in a chunk of pagination | `pagination: { chunk:10 }`
 pagination.dropdown | Boolean | use a dropdown select pagination next to the records-per-page list, instead of links at the bottom of the table. | `pagination: { dropdown:false }`
 pagination.nav | String | Which method to use when navigating outside of chunk boundries. Options are : `scroll` - the range of pages presented will incrementally change when navigating to a page outside the chunk (e.g 1-10 will become 2-11 once the user presses the next arrow to move to page 11). `fixed` - navigation will occur between fixed chunks (e.g 1-10, 11-20, 21-30 etc.). Double arrows will be added to allow navigation to the beginning of the previous or next chunk | `pagination: { nav: 'fixed' }` 
+pagination.edge | Boolean | Show 'First' and 'Last' buttons | `pagination: { edge: false }`
 params (server-side) | Object | Additional parameters to send along with the request | `{}`
 perPage | number | Initial records per page | `10`
 perPageValues | Array | Records per page options | `[10,25,50,100]`

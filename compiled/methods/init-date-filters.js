@@ -37,6 +37,7 @@ module.exports = function () {
   var el;
   var that = this;
   var query = this.vuex ? JSON.parse(JSON.stringify(this.query)) : this.query;
+  var columnOptions;
 
   var search = function search(query, e) {
     return that.source == 'client' ? that.search(that.data, e) : that.serverSearch(query, e);
@@ -66,8 +67,25 @@ module.exports = function () {
 
   that.opts.dateColumns.forEach(function (column) {
 
+    var range = that._getInitialDateRange(column);
+
+    if (range) {
+
+      that._setDatepickerText(column, range.start, range.end);
+
+      range = {
+        startDate: range.start,
+        endDate: range.end
+      };
+    } else {
+      range = {};
+    }
+
     el = $(that.$el).find("#VueTables__" + column + "-filter");
-    el.daterangepicker(datepickerOptions);
+
+    columnOptions = typeof that.opts.datepickerPerColumnOptions[column] !== 'undefined' ? that.opts.datepickerPerColumnOptions[column] : {};
+
+    el.daterangepicker(merge(datepickerOptions, columnOptions, range));
 
     el.on('apply.daterangepicker', function (ev, picker) {
 
@@ -84,6 +102,7 @@ module.exports = function () {
       } else {
         $(this).text(getDateLabel(picker.startDate, picker.endDate, datepickerOptions.ranges, that.opts.dateLabelFormat));
       }
+      that._setDatepickerText($(this), picker.startDate, picker.endDate);
 
       that.updateState('query', query);
 
