@@ -70,9 +70,6 @@ module.exports = function () {
     var range = that._getInitialDateRange(column);
 
     if (range) {
-
-      that._setDatepickerText(column, range.start, range.end);
-
       range = {
         startDate: range.start,
         endDate: range.end
@@ -102,7 +99,6 @@ module.exports = function () {
       } else {
         $(this).text(getDateLabel(picker.startDate, picker.endDate, datepickerOptions.ranges, that.opts.dateLabelFormat));
       }
-      that._setDatepickerText($(this), picker.startDate, picker.endDate);
 
       that.updateState('query', query);
 
