@@ -10,6 +10,7 @@ module.exports = function (h, inputClass) {
   var debouncedSearch = debounce(search, this.opts.debounce);
 
   var onKeyUp = function onKeyUp(e) {
+    // XXX MODIFIED BY RESULTO (prevent TAB key from triggering)
     if (e.keyCode === 9) {
       return;
     }
@@ -22,12 +23,21 @@ module.exports = function (h, inputClass) {
     }
   };
 
+  var onKeyDown = function onKeyDown(e) {
+    // XXX MODIFIED BY RESULTO (trigger search on TAB)
+    if (e.keyCode === 9) {
+      debouncedSearch.clear();
+      search.apply(undefined, arguments);
+    }
+  };
+
   return function (column) {
     return h(
       'input',
       {
         on: {
-          'keyup': onKeyUp
+          'keyup': onKeyUp,
+          'keydown': onKeyDown
         },
 
         'class': inputClass,
