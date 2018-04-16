@@ -10,6 +10,10 @@ module.exports = function (h, inputClass) {
   var debouncedSearch = debounce(search, this.opts.debounce);
 
   var onKeyUp = function onKeyUp(e) {
+    if (e.keyCode === 9) {
+      return;
+    }
+
     if (e.keyCode === 13) {
       debouncedSearch.clear();
       search.apply(undefined, arguments);
