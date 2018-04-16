@@ -10,7 +10,7 @@ module.exports = function (h, inputClass) {
   var debouncedSearch = debounce(search, this.opts.debounce);
 
   var onKeyUp = function onKeyUp(e) {
-    // XXX MODIFIED BY RESULTO (prevent TAB from triggering search)
+    // XXX MODIFIED BY RESULTO (prevent TAB key from triggering)
     if (e.keyCode === 9) {
       return;
     }
@@ -32,20 +32,24 @@ module.exports = function (h, inputClass) {
   };
 
   return function (column) {
-    return h('input', {
-      on: {
-        'keyup': onKeyUp,
-        'keydown': onKeyDown
-      },
+    return h(
+      'input',
+      {
+        on: {
+          'keyup': onKeyUp,
+          'keydown': onKeyDown
+        },
 
-      'class': inputClass,
-      attrs: { name: 'vf__' + column,
-        type: 'text',
-        placeholder: _this.display('filterBy', { column: _this.getHeading(column) })
+        'class': inputClass,
+        attrs: { name: 'vf__' + column,
+          type: 'text',
+          placeholder: _this.display('filterBy', { column: _this.getHeading(column) })
+        },
+        domProps: {
+          'value': _this.query[column]
+        }
       },
-      domProps: {
-        'value': _this.query[column]
-      }
-    });
+      []
+    );
   };
 };
